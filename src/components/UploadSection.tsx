@@ -108,8 +108,8 @@ const UploadSection: React.FC = () => {
             accept=".pdf,.doc,.docx"
           />
           <label htmlFor="file-upload">
-            <Button as="span" className="cursor-pointer hover-scale">
-              Select Files
+            <Button className="cursor-pointer hover-scale" asChild>
+              <span>Select Files</span>
             </Button>
           </label>
           
