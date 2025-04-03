@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
+import Subscription from "./pages/Subscription";
+import Workflow from "./pages/Workflow";
+import QuantumDashboard from "./pages/QuantumDashboard";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +24,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/analysis" element={<Analysis />} />
+          <Route path="/subscription" element={<Subscription />} />
+          <Route path="/workflow" element={<Workflow />} />
+          <Route path="/quantum-dashboard" element={<QuantumDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
