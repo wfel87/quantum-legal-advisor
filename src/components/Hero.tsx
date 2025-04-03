@@ -53,7 +53,7 @@ const Hero: React.FC = () => {
             <Button size="lg" className="hover-scale group" onClick={() => navigate('/dashboard')}>
               Get Started <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
             </Button>
-            <Button variant="outline" size="lg" className="hover-scale">
+            <Button variant="outline" size="lg" className="hover-scale" onClick={() => navigate('/contact')}>
               Book a Demo
             </Button>
           </div>
