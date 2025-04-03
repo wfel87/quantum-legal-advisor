@@ -267,7 +267,10 @@ const WorkflowBuilder: React.FC = () => {
       </div>
       
       <div className="flex justify-end">
-        <Button onClick={saveWorkflow} className="hover-scale">
+        <Button 
+          onClick={saveWorkflow} 
+          className="bg-primary text-white hover:bg-primary/90 transition-colors"
+        >
           Save Workflow
         </Button>
       </div>
