@@ -74,13 +74,13 @@ const Hero: React.FC = () => {
                 icon: Briefcase, 
                 title: "Streamlined Workflows", 
                 description: "Automate tedious document review processes and save valuable time.",
-                path: "/dashboard"  // Changed from /workflow to /dashboard which is more relevant
+                path: "/workflow"  // Changed to the dedicated Workflow page
               },
               { 
                 icon: ShieldCheck, 
                 title: "Enterprise Security", 
                 description: "Bank-level encryption and compliance with legal data regulations.",
-                path: "/subscription"  // Changed from /legal-advisor to /subscription which likely includes security info
+                path: "/security"  // Changed to the new dedicated Security page
               }
             ].map((feature, index) => (
               <div 

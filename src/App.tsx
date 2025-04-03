@@ -14,6 +14,7 @@ import QuantumDashboard from "./pages/QuantumDashboard";
 import Contact from "./pages/Contact";
 import LegalAdvisor from "./pages/LegalAdvisor";
 import Pricing from "./pages/Pricing";
+import Security from "./pages/Security";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/analysis" element={<Analysis />} />
             <Route path="/legal-advisor" element={<LegalAdvisor />} />
+            <Route path="/security" element={<Security />} />
             
             {/* Protected routes */}
             <Route path="/dashboard" element={
