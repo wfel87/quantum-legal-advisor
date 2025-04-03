@@ -1,11 +1,12 @@
 
-import React from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { 
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious
+  CarouselPrevious,
+  type CarouselApi
 } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
 import { StarIcon } from 'lucide-react';
@@ -18,6 +19,11 @@ interface Testimonial {
 }
 
 const Testimonials: React.FC = () => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<number | null>(null);
+  const AUTO_SCROLL_INTERVAL = 5000; // 5 seconds
+
   const testimonials: Testimonial[] = [
     {
       quote: "DocuScan AI completely transformed our contract review process. What used to take days now takes minutes, with even greater accuracy.",
@@ -51,6 +57,35 @@ const Testimonials: React.FC = () => {
     }
   ];
 
+  const startAutoScroll = useCallback(() => {
+    if (intervalRef.current !== null) return;
+    
+    intervalRef.current = window.setInterval(() => {
+      if (api && !isPaused) {
+        api.scrollNext();
+      }
+    }, AUTO_SCROLL_INTERVAL);
+  }, [api, isPaused]);
+
+  const stopAutoScroll = useCallback(() => {
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
+
+  // Initialize auto-scrolling when the component mounts and api is available
+  useEffect(() => {
+    if (!api) return;
+    
+    startAutoScroll();
+    
+    // Clean up the interval when the component unmounts
+    return () => {
+      stopAutoScroll();
+    };
+  }, [api, startAutoScroll, stopAutoScroll]);
+
   return (
     <section className="py-20 px-6 md:px-10 bg-gradient-to-b from-background/40 to-background">
       <div className="max-w-7xl mx-auto">
@@ -61,11 +96,17 @@ const Testimonials: React.FC = () => {
           </p>
         </div>
 
-        <Carousel className="w-full max-w-5xl mx-auto">
+        <Carousel 
+          className="w-full max-w-5xl mx-auto"
+          setApi={setApi}
+          opts={{ loop: true }}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
           <CarouselContent>
             {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className="md:basis-1/1 lg:basis-1/1 pl-6">
-                <Card className="border-0 shadow-lg bg-gradient-to-br from-primary/5 to-background glass-card">
+                <Card className="border-0 shadow-lg bg-gradient-to-br from-primary/5 to-background glass-card transition-all duration-300 hover:shadow-xl">
                   <CardContent className="p-8">
                     <div className="flex gap-1 mb-4">
                       {[...Array(5)].map((_, i) => (
