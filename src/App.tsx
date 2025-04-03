@@ -10,6 +10,7 @@ import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
 import Subscription from "./pages/Subscription";
 import Workflow from "./pages/Workflow";
+import WorkflowPreview from "./pages/WorkflowPreview";
 import QuantumDashboard from "./pages/QuantumDashboard";
 import Contact from "./pages/Contact";
 import LegalAdvisor from "./pages/LegalAdvisor";
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/analysis" element={<Analysis />} />
             <Route path="/legal-advisor" element={<LegalAdvisor />} />
             <Route path="/security" element={<Security />} />
+            <Route path="/workflow-preview" element={<WorkflowPreview />} />
             
             {/* Protected routes */}
             <Route path="/dashboard" element={
