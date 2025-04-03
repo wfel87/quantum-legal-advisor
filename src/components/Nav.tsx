@@ -1,13 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, AtomIcon } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, AtomIcon, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Nav: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +31,13 @@ const Nav: React.FC = () => {
     { name: 'Workflow', path: '/workflow' },
     { name: 'Analysis', path: '/analysis' },
     { name: 'Legal Advisor', path: '/legal-advisor' },
+    { name: 'Pricing', path: '/pricing' },
   ];
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <nav 
@@ -65,14 +74,37 @@ const Nav: React.FC = () => {
             ))}
           </div>
           <div className="flex items-center gap-3 ml-2 shrink-0">
-            <Button 
-              variant="outline" 
-              className="px-3 lg:px-4"
-              onClick={() => location.pathname !== '/subscription' && (window.location.href = '/subscription')}
-            >
-              Subscribe
-            </Button>
-            <Button className="px-3 lg:px-4">Get Started</Button>
+            {isAuthenticated ? (
+              <>
+                <span className="text-sm font-medium mr-2">
+                  {user?.email}
+                </span>
+                <Button 
+                  variant="outline" 
+                  className="px-3 lg:px-4"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="outline" 
+                  className="px-3 lg:px-4"
+                  onClick={() => navigate('/subscription')}
+                >
+                  Login
+                </Button>
+                <Button 
+                  className="px-3 lg:px-4"
+                  onClick={() => navigate('/subscription')}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
         </div>
 
@@ -104,22 +136,46 @@ const Nav: React.FC = () => {
             ))}
           </div>
           <div className="flex flex-col gap-3 pt-3 border-t border-border">
-            <Button 
-              variant="outline" 
-              className="w-full justify-center"
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                location.pathname !== '/subscription' && (window.location.href = '/subscription');
-              }}
-            >
-              Subscribe
-            </Button>
-            <Button 
-              className="w-full justify-center"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Get Started
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <div className="py-2 text-sm font-medium">
+                  {user?.email}
+                </div>
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-center"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    handleLogout();
+                  }}
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-center"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    navigate('/subscription');
+                  }}
+                >
+                  Login
+                </Button>
+                <Button 
+                  className="w-full justify-center"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    navigate('/subscription');
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
         </div>
       )}

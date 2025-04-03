@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { 
   FileText, AlertTriangle, Calendar, Clipboard, 
-  Users, DollarSign, Clock, ChevronDown, ChevronUp, BarChart3
+  Users, DollarSign, Clock, ChevronDown, ChevronUp, BarChart3, Lock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,6 +12,9 @@ import {
   AccordionItem,
   AccordionTrigger 
 } from '@/components/ui/accordion';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 // Mock analysis data
 const mockAnalysis = {
@@ -58,6 +61,8 @@ const mockAnalysis = {
 
 const AnalysisResults: React.FC = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const toggleSection = (section: string) => {
     if (expandedSection === section) {
@@ -80,6 +85,119 @@ const AnalysisResults: React.FC = () => {
     }
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="w-full max-w-7xl mx-auto p-6 md:p-10 animate-fade-in">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-4">Document Analysis Preview</h1>
+          <p className="text-muted-foreground">
+            Experience our powerful AI-driven document analysis capabilities. Sign up for full access.
+          </p>
+        </div>
+        
+        <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { 
+              icon: Clipboard, 
+              title: 'Key Terms Identified', 
+              value: '7+', 
+              color: 'bg-blue-50 text-blue-500' 
+            },
+            { 
+              icon: AlertTriangle, 
+              title: 'Potential Risks', 
+              value: '3+', 
+              color: 'bg-red-50 text-red-500' 
+            },
+            { 
+              icon: Clock, 
+              title: 'Obligations', 
+              value: '4+', 
+              color: 'bg-green-50 text-green-500' 
+            },
+          ].map((stat, index) => (
+            <div key={index} className="rounded-xl glass-card p-6 hover-scale">
+              <div className={`w-12 h-12 rounded-lg ${stat.color} flex items-center justify-center mb-4`}>
+                <stat.icon size={24} />
+              </div>
+              <h3 className="text-lg font-medium mb-1">{stat.title}</h3>
+              <p className="text-3xl font-bold">{stat.value}</p>
+            </div>
+          ))}
+        </div>
+        
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Lock className="h-5 w-5 text-primary" />
+              Full Analysis Locked
+            </CardTitle>
+            <CardDescription>
+              Sign up to see the complete analysis with all details and recommendations
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg border bg-card/50">
+                <h3 className="font-medium flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-muted-foreground" />
+                  Document Type
+                </h3>
+                <p className="text-muted-foreground">Employment Contract</p>
+              </div>
+              <div className="p-4 rounded-lg border bg-card/50">
+                <h3 className="font-medium flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                  Added On
+                </h3>
+                <p className="text-muted-foreground">2023-09-15</p>
+              </div>
+            </div>
+            
+            <div className="relative overflow-hidden rounded-lg border">
+              <div className="p-6">
+                <h3 className="text-lg font-medium mb-4">Key Terms Preview</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-primary" />
+                    <span>Employment Term: 3 years with automatic renewal</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-primary" />
+                    <span>Compensation: $95,000 per annum</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-primary" />
+                    <span>Probation Period: 90 days</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm">
+                <div className="text-center p-6">
+                  <Lock className="h-10 w-10 mx-auto mb-4 text-muted-foreground" />
+                  <h3 className="text-lg font-medium mb-2">Premium Feature</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Sign up to access the full analysis and all premium features
+                  </p>
+                  <Button onClick={() => navigate('/subscription')}>
+                    Sign Up Now
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <div className="flex justify-center">
+          <Button size="lg" onClick={() => navigate('/subscription')}>
+            Sign Up for Full Access
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Full view for authenticated users
   return (
     <div className="w-full max-w-7xl mx-auto p-6 md:p-10 animate-fade-in">
       <div className="mb-8">
@@ -303,5 +421,21 @@ const AnalysisResults: React.FC = () => {
     </div>
   );
 };
+
+// Helper component for the preview
+const Check = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
 
 export default AnalysisResults;

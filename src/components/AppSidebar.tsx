@@ -1,5 +1,6 @@
+
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Home, 
   LayoutDashboard, 
@@ -9,7 +10,10 @@ import {
   Scale, 
   Settings,
   Pin,
-  PinOff
+  PinOff,
+  LogOut,
+  User,
+  CreditCard
 } from 'lucide-react';
 import {
   Sidebar,
@@ -27,6 +31,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { useAuth } from '@/contexts/AuthContext';
 
 const AppSidebar = () => {
   const location = useLocation();
@@ -37,15 +42,28 @@ const AppSidebar = () => {
     return saved ? JSON.parse(saved) : true;
   });
   const [isHovered, setIsHovered] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
   
-  // Define menu items
-  const navItems = [
+  // Define public menu items
+  const publicNavItems = [
     { name: 'Home', path: '/', icon: Home },
+    { name: 'Analysis', path: '/analysis', icon: FileText },
+    { name: 'Legal Advisor', path: '/legal-advisor', icon: Scale },
+    { name: 'Pricing', path: '/pricing', icon: CreditCard },
+  ];
+  
+  // Define protected menu items (only for authenticated users)
+  const protectedNavItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'Quantum Dashboard', path: '/quantum-dashboard', icon: AtomIcon },
     { name: 'Workflow', path: '/workflow', icon: Workflow },
-    { name: 'Analysis', path: '/analysis', icon: FileText },
-    { name: 'Legal Advisor', path: '/legal-advisor', icon: Scale },
+  ];
+  
+  // Combine items based on authentication state
+  const navItems = [
+    ...publicNavItems,
+    ...(isAuthenticated ? protectedNavItems : [])
   ];
 
   // Save pinned state to localStorage
@@ -75,6 +93,11 @@ const AppSidebar = () => {
     if (!isPinned) {
       setOpen(true);
     }
+  };
+  
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -132,21 +155,51 @@ const AppSidebar = () => {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        
+        {isAuthenticated && (
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-primary/70">User</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <div className="px-3 py-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <User size={16} className="text-muted-foreground" />
+                  <span className="truncate">{user?.email}</span>
+                </div>
+              </div>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
       
       <SidebarFooter className="bg-background">
         <div className="px-3 pb-3 pt-2 space-y-3">
-          <Button 
-            variant="outline" 
-            className="w-full justify-start border-border hover:bg-muted"
-            onClick={() => location.pathname !== '/subscription' && (window.location.href = '/subscription')}
-          >
-            <Settings className="mr-2 h-4 w-4" />
-            Subscribe
-          </Button>
-          <Button className="w-full justify-start">
-            Get Started
-          </Button>
+          {isAuthenticated ? (
+            <Button 
+              variant="outline" 
+              className="w-full justify-start border-border hover:bg-muted"
+              onClick={handleLogout}
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </Button>
+          ) : (
+            <>
+              <Button 
+                variant="outline" 
+                className="w-full justify-start border-border hover:bg-muted"
+                onClick={() => navigate('/subscription')}
+              >
+                <User className="mr-2 h-4 w-4" />
+                Login
+              </Button>
+              <Button 
+                className="w-full justify-start"
+                onClick={() => navigate('/subscription')}
+              >
+                Sign Up
+              </Button>
+            </>
+          )}
         </div>
       </SidebarFooter>
     </Sidebar>

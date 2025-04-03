@@ -12,28 +12,51 @@ import Subscription from "./pages/Subscription";
 import Workflow from "./pages/Workflow";
 import QuantumDashboard from "./pages/QuantumDashboard";
 import Contact from "./pages/Contact";
+import LegalAdvisor from "./pages/LegalAdvisor";
+import Pricing from "./pages/Pricing";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/analysis" element={<Analysis />} />
-          <Route path="/subscription" element={<Subscription />} />
-          <Route path="/workflow" element={<Workflow />} />
-          <Route path="/quantum-dashboard" element={<QuantumDashboard />} />
-          <Route path="/contact" element={<Contact />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/subscription" element={<Subscription />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/analysis" element={<Analysis />} />
+            <Route path="/legal-advisor" element={<LegalAdvisor />} />
+            
+            {/* Protected routes */}
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/workflow" element={
+              <ProtectedRoute>
+                <Workflow />
+              </ProtectedRoute>
+            } />
+            <Route path="/quantum-dashboard" element={
+              <ProtectedRoute>
+                <QuantumDashboard />
+              </ProtectedRoute>
+            } />
+            
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 
