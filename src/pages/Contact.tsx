@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Mail, Phone } from 'lucide-react';
+import { Mail, Phone, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +22,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { sendEmailNotification, sendSMSNotification, ContactFormData } from '@/services/awsService';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
@@ -42,6 +44,7 @@ type FormValues = z.infer<typeof formSchema>;
 const Contact: React.FC = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -58,15 +61,32 @@ const Contact: React.FC = () => {
 
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
+    setSubmissionError(null);
     
     try {
-      // In a real application, you would send this data to your backend
       console.log('Form data submitted:', data);
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Format the data for sending to AWS services
+      const contactData: ContactFormData = {
+        name: data.name,
+        email: data.email,
+        company: data.company,
+        phone: data.phone,
+        message: data.message,
+        preferredContact: data.preferredContact,
+      };
       
-      toast.success('Your demo request has been submitted! We will contact you shortly.');
+      // Send data based on preferred contact method
+      if (data.preferredContact === 'email') {
+        await sendEmailNotification(contactData);
+        toast.success('Your demo request has been submitted! We will contact you by email shortly.');
+      } else {
+        if (!data.phone || data.phone.trim() === '') {
+          throw new Error('Phone number is required for SMS notifications');
+        }
+        await sendSMSNotification(contactData);
+        toast.success('Your demo request has been submitted! We will contact you by phone shortly.');
+      }
       
       // Reset form
       form.reset();
@@ -74,12 +94,19 @@ const Contact: React.FC = () => {
       // Redirect to home page after a short delay
       setTimeout(() => navigate('/'), 2000);
     } catch (error) {
-      toast.error('There was a problem submitting your request. Please try again.');
       console.error('Form submission error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'There was a problem submitting your request';
+      
+      setSubmissionError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  // Phone field is required when preferred contact method is phone
+  const preferredContact = form.watch('preferredContact');
+  const phoneIsRequired = preferredContact === 'phone';
 
   return (
     <Layout>
@@ -90,6 +117,15 @@ const Contact: React.FC = () => {
             Fill out the form below and one of our representatives will contact you to schedule a personalized demo of DocuScan.
           </p>
         </div>
+        
+        {submissionError && (
+          <Alert variant="destructive" className="mb-6">
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>
+              {submissionError}
+            </AlertDescription>
+          </Alert>
+        )}
         
         <div className="bg-card rounded-lg shadow-lg p-6 md:p-8">
           <Form {...form}>
@@ -142,7 +178,9 @@ const Contact: React.FC = () => {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number (Optional)</FormLabel>
+                      <FormLabel>
+                        Phone Number {phoneIsRequired ? <span className="text-destructive">*</span> : '(Optional)'}
+                      </FormLabel>
                       <FormControl>
                         <Input placeholder="+1 (555) 123-4567" type="tel" {...field} />
                       </FormControl>
@@ -178,7 +216,13 @@ const Contact: React.FC = () => {
                     <FormLabel>Preferred Contact Method</FormLabel>
                     <FormControl>
                       <RadioGroup
-                        onValueChange={field.onChange}
+                        onValueChange={(value) => {
+                          field.onChange(value);
+                          // Trigger validation for phone if phone is selected
+                          if (value === 'phone') {
+                            form.trigger('phone');
+                          }
+                        }}
                         defaultValue={field.value}
                         className="flex flex-col md:flex-row space-y-1 md:space-y-0 md:space-x-6"
                       >
@@ -202,6 +246,9 @@ const Contact: React.FC = () => {
                         </FormItem>
                       </RadioGroup>
                     </FormControl>
+                    <FormDescription>
+                      We'll contact you via your preferred method using our secure AWS notification system.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -232,7 +279,14 @@ const Contact: React.FC = () => {
               />
               
               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? 'Submitting...' : 'Submit Request'}
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Submitting...
+                  </>
+                ) : (
+                  'Submit Request'
+                )}
               </Button>
             </form>
           </Form>
