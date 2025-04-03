@@ -6,7 +6,7 @@ import WorkflowBuilder from '@/components/WorkflowBuilder';
 const Workflow: React.FC = () => {
   return (
     <Layout>
-      <div className="pt-20">
+      <div>
         <WorkflowBuilder />
       </div>
     </Layout>

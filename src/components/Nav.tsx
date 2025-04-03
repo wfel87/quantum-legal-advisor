@@ -31,11 +31,11 @@ const Nav: React.FC = () => {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 md:px-10 py-4 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 md:px-6 h-16
       ${isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'}`}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
+      <div className="max-w-7xl mx-auto flex items-center justify-between h-full">
+        <Link to="/" className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-semibold">
             <AtomIcon size={18} />
           </div>
@@ -43,29 +43,35 @@ const Nav: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          <div className="flex gap-6">
+        <div className="hidden md:flex items-center gap-6 lg:gap-8">
+          <div className="flex gap-4 lg:gap-6 overflow-x-auto hide-scrollbar">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`font-medium transition-colors hover:text-primary ${
+                className={`font-medium whitespace-nowrap transition-colors hover:text-primary ${
                   location.pathname === item.path ? 'text-primary' : 'text-foreground/80'
                 }`}
               >
-                {item.name}
+                {item.name.length > 12 ? (
+                  <span className="inline-block max-w-[120px] truncate" title={item.name}>
+                    {item.name}
+                  </span>
+                ) : (
+                  item.name
+                )}
               </Link>
             ))}
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 ml-2 shrink-0">
             <Button 
               variant="outline" 
-              className="hover-scale"
+              className="hover-scale px-3 lg:px-4"
               onClick={() => location.pathname !== '/subscription' && (window.location.href = '/subscription')}
             >
               Subscribe
             </Button>
-            <Button className="hover-scale">Get Started</Button>
+            <Button className="hover-scale px-3 lg:px-4">Get Started</Button>
           </div>
         </div>
 
@@ -73,6 +79,7 @@ const Nav: React.FC = () => {
         <button 
           className="md:hidden text-foreground"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -80,8 +87,8 @@ const Nav: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-border animate-fade-in p-4">
-          <div className="flex flex-col gap-4 pb-4">
+        <div className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-border animate-fade-in p-4">
+          <div className="flex flex-col gap-3 pb-3">
             {navItems.map((item) => (
               <Link
                 key={item.name}
