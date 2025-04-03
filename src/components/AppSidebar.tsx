@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   Home, 
@@ -8,7 +8,9 @@ import {
   FileText, 
   Workflow, 
   Scale, 
-  Settings
+  Settings,
+  Pin,
+  PinOff
 } from 'lucide-react';
 import {
   Sidebar,
@@ -22,11 +24,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  useSidebar
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 const AppSidebar = () => {
   const location = useLocation();
+  const { open, setOpen } = useSidebar();
+  const [isPinned, setIsPinned] = useState(() => {
+    // Load pinned state from localStorage if available
+    const saved = localStorage.getItem('sidebar-pinned');
+    return saved ? JSON.parse(saved) : true;
+  });
+  const [isHovered, setIsHovered] = useState(false);
   
   // Define menu items
   const navItems = [
@@ -38,15 +49,60 @@ const AppSidebar = () => {
     { name: 'Legal Advisor', path: '/legal-advisor', icon: Scale },
   ];
 
+  // Save pinned state to localStorage
+  useEffect(() => {
+    localStorage.setItem('sidebar-pinned', JSON.stringify(isPinned));
+  }, [isPinned]);
+
+  // Handle auto-hide behavior
+  useEffect(() => {
+    if (!isPinned) {
+      if (isHovered) {
+        setOpen(true);
+      } else {
+        const timer = setTimeout(() => setOpen(false), 300);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [isPinned, isHovered, setOpen]);
+
+  const togglePin = () => {
+    setIsPinned(!isPinned);
+    if (!isPinned) {
+      setOpen(true);
+    }
+  };
+
   return (
-    <Sidebar className="bg-background border-r border-border">
+    <Sidebar 
+      className="bg-background border-r border-border"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <SidebarHeader className="bg-background">
-        <Link to="/" className="flex items-center gap-2 px-2 py-3">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-semibold">
-            <AtomIcon size={18} />
-          </div>
-          <span className="font-semibold text-xl tracking-tight">DocuScan</span>
-        </Link>
+        <div className="flex items-center justify-between px-2 py-3">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-semibold">
+              <AtomIcon size={18} />
+            </div>
+            <span className="font-semibold text-xl tracking-tight">DocuScan</span>
+          </Link>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 p-0 ml-2"
+                onClick={togglePin}
+              >
+                {isPinned ? <PinOff size={16} /> : <Pin size={16} />}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              {isPinned ? 'Unpin Sidebar' : 'Pin Sidebar'}
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </SidebarHeader>
       
       <SidebarContent className="bg-background">
