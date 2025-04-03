@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { 
   AtomIcon, BarChart3, Zap, BrainCircuit, 
   FileText, AlertTriangle, Clock, Settings, 
-  PlusCircle, CalendarClock, Gauge
+  PlusCircle, CalendarClock, Gauge, Percent, Vibrate, Database
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -15,7 +15,8 @@ import {
   ChartLegend,
   ChartLegendContent,
 } from '@/components/ui/chart';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Progress } from '@/components/ui/progress';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid, Tooltip, Legend, ComposedChart, Area } from 'recharts';
 
 const QuantumDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -43,6 +44,39 @@ const QuantumDashboard: React.FC = () => {
     { name: 'Week 2', rating: 82 },
     { name: 'Week 3', rating: 86 },
     { name: 'Week 4', rating: 92 },
+  ];
+
+  // New comparison data for quantum vs. traditional
+  const comparisonData = [
+    { 
+      name: 'Speed', 
+      quantum: 95, 
+      traditional: 42,
+      description: 'Processing time for document analysis'
+    },
+    { 
+      name: 'Accuracy', 
+      quantum: 97, 
+      traditional: 83,
+      description: 'Correctness of extracted information'
+    },
+    { 
+      name: 'Data Coverage', 
+      quantum: 99, 
+      traditional: 76,
+      description: 'Percentage of document data analyzed'
+    },
+  ];
+
+  // Performance comparison chart data
+  const performanceData = [
+    { name: 'Day 1', quantum: 92, traditional: 73 },
+    { name: 'Day 2', quantum: 93, traditional: 74 },
+    { name: 'Day 3', quantum: 95, traditional: 72 },
+    { name: 'Day 4', quantum: 96, traditional: 75 },
+    { name: 'Day 5', quantum: 98, traditional: 76 },
+    { name: 'Day 6', quantum: 97, traditional: 75 },
+    { name: 'Day 7', quantum: 99, traditional: 77 },
   ];
 
   // Card data
@@ -146,6 +180,19 @@ const QuantumDashboard: React.FC = () => {
     }
   };
 
+  const getComparisonIcon = (metric: string) => {
+    switch (metric.toLowerCase()) {
+      case 'speed':
+        return Vibrate;
+      case 'accuracy':
+        return Gauge;
+      case 'data coverage':
+        return Database;
+      default:
+        return AtomIcon;
+    }
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto p-6 md:p-10 animate-fade-in">
       <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -168,11 +215,63 @@ const QuantumDashboard: React.FC = () => {
           
           <Button 
             onClick={() => navigate('/upload')}
-            className="hover-scale"
+            className="transition-transform duration-300 hover:scale-105"
           >
             <PlusCircle className="mr-2 h-4 w-4" />
             New Document
           </Button>
+        </div>
+      </div>
+
+      {/* New Quantum vs Traditional Comparison Section */}
+      <div className="mb-8 rounded-xl bg-gradient-to-r from-purple-100 via-indigo-50 to-blue-100 p-6 border border-primary/20">
+        <h2 className="text-xl font-bold mb-4 flex items-center">
+          <AtomIcon className="mr-2 h-5 w-5 text-primary" />
+          Quantum vs. Traditional Analysis
+        </h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {comparisonData.map((item, index) => {
+            const Icon = getComparisonIcon(item.name);
+            return (
+              <div key={index} className="rounded-xl glass-card p-5 hover:shadow-lg transition-all">
+                <div className="flex items-center mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mr-3">
+                    <Icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="font-semibold">{item.name}</h3>
+                </div>
+                
+                <p className="text-sm text-muted-foreground mb-4">{item.description}</p>
+                
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex justify-between mb-1 text-sm">
+                      <span className="font-medium flex items-center">
+                        <AtomIcon className="h-3 w-3 mr-1 text-primary" /> Quantum
+                      </span>
+                      <span className="font-bold">{item.quantum}%</span>
+                    </div>
+                    <Progress value={item.quantum} className="h-2 bg-primary/20" indicatorClassName="bg-primary" />
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between mb-1 text-sm">
+                      <span className="font-medium">Traditional</span>
+                      <span className="font-bold">{item.traditional}%</span>
+                    </div>
+                    <Progress value={item.traditional} className="h-2 bg-muted" />
+                  </div>
+                  
+                  <div className="pt-2 text-right">
+                    <span className="inline-flex items-center text-sm font-medium text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">
+                      +{item.quantum - item.traditional}% improvement
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -192,7 +291,7 @@ const QuantumDashboard: React.FC = () => {
             </div>
             <Button 
               onClick={() => navigate('/subscription')}
-              className="hover-scale"
+              className="transition-transform duration-300 hover:scale-105"
             >
               Upgrade Now
             </Button>
@@ -202,7 +301,7 @@ const QuantumDashboard: React.FC = () => {
       
       <div className="mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((stat, index) => (
-          <div key={index} className="rounded-xl glass-card p-6 hover-scale">
+          <div key={index} className="rounded-xl glass-card p-6 transition-transform duration-300 hover:scale-105">
             <div className={`w-12 h-12 rounded-lg ${stat.color} flex items-center justify-center mb-4`}>
               <stat.icon size={24} />
             </div>
@@ -217,6 +316,7 @@ const QuantumDashboard: React.FC = () => {
         <TabsList className="mb-6">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="comparison">Performance Comparison</TabsTrigger>
           <TabsTrigger value="quantum">Quantum Features</TabsTrigger>
         </TabsList>
         
@@ -344,6 +444,70 @@ const QuantumDashboard: React.FC = () => {
             </div>
           </div>
         </TabsContent>
+
+        {/* New Comparison Tab */}
+        <TabsContent value="comparison" className="animate-slide-in space-y-6">
+          <div className="rounded-xl glass-card p-6">
+            <h3 className="text-lg font-medium mb-4 flex items-center">
+              <Gauge className="mr-2 h-5 w-5 text-primary" />
+              Quantum vs. Traditional Performance
+            </h3>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart data={performanceData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis domain={[0, 100]} />
+                  <Tooltip />
+                  <Legend />
+                  <Area type="monotone" dataKey="quantum" fill="rgba(99, 102, 241, 0.3)" stroke="#6366f1" />
+                  <Line type="monotone" dataKey="traditional" stroke="#94a3b8" />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-100">
+              <h4 className="font-medium text-blue-800 mb-2 flex items-center">
+                <AtomIcon className="h-4 w-4 mr-1" />
+                Performance Insights
+              </h4>
+              <p className="text-sm text-blue-700">
+                Quantum processing shows an average of <span className="font-bold">27%</span> higher performance
+                compared to traditional methods across all documents. The greatest improvement was seen in complex legal contracts,
+                where quantum methods achieved <span className="font-bold">99%</span> accuracy versus <span className="font-bold">77%</span> with traditional methods.
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {comparisonData.map((item, index) => (
+              <div key={index} className="rounded-xl glass-card p-6">
+                <h3 className="font-medium mb-3">{item.name} Analysis</h3>
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-3xl font-bold text-primary">{item.quantum}%</span>
+                  <span className="text-sm font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                    +{item.quantum - item.traditional}%
+                  </span>
+                </div>
+                <div className="space-y-1 text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="flex items-center">
+                      <div className="w-3 h-3 rounded-full bg-primary mr-2"></div>
+                      Quantum
+                    </span>
+                    <span>{item.quantum}%</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="flex items-center">
+                      <div className="w-3 h-3 rounded-full bg-slate-400 mr-2"></div>
+                      Traditional
+                    </span>
+                    <span>{item.traditional}%</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </TabsContent>
         
         <TabsContent value="quantum" className="animate-slide-in">
           <div className="rounded-xl glass-card p-6">
@@ -393,7 +557,7 @@ const QuantumDashboard: React.FC = () => {
               <div className="mt-6 text-center">
                 <Button 
                   onClick={() => navigate('/subscription')}
-                  className="hover-scale"
+                  className="transition-transform duration-300 hover:scale-105"
                 >
                   Upgrade to Premium
                 </Button>

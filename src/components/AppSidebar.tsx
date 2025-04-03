@@ -39,8 +39,8 @@ const AppSidebar = () => {
   ];
 
   return (
-    <Sidebar>
-      <SidebarHeader>
+    <Sidebar className="bg-transparent backdrop-blur-sm border-r border-white/10">
+      <SidebarHeader className="bg-transparent">
         <Link to="/" className="flex items-center gap-2 px-2 py-3">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-semibold">
             <AtomIcon size={18} />
@@ -49,9 +49,9 @@ const AppSidebar = () => {
         </Link>
       </SidebarHeader>
       
-      <SidebarContent>
+      <SidebarContent className="bg-transparent">
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-primary/70">Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
@@ -60,6 +60,7 @@ const AppSidebar = () => {
                     asChild 
                     isActive={location.pathname === item.path}
                     tooltip={item.name}
+                    className="hover:bg-white/10 data-[active=true]:bg-white/20"
                   >
                     <Link to={item.path}>
                       <item.icon size={20} />
@@ -73,11 +74,11 @@ const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       
-      <SidebarFooter>
+      <SidebarFooter className="bg-transparent">
         <div className="px-3 pb-3 pt-2 space-y-3">
           <Button 
             variant="outline" 
-            className="w-full justify-start"
+            className="w-full justify-start bg-transparent border-white/20 hover:bg-white/10"
             onClick={() => location.pathname !== '/subscription' && (window.location.href = '/subscription')}
           >
             <Settings className="mr-2 h-4 w-4" />
