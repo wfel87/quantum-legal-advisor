@@ -26,6 +26,10 @@ const Hero: React.FC = () => {
     }
   }, []);
 
+  const handleFeatureClick = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <div ref={heroRef} className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden pt-20 px-6 md:px-10">
       {/* Decorative background */}
@@ -60,11 +64,38 @@ const Hero: React.FC = () => {
           
           <div data-animate className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: FileText, title: "Intelligent Document Analysis", description: "Extract key clauses, terms, and information with AI precision." },
-              { icon: Briefcase, title: "Streamlined Workflows", description: "Automate tedious document review processes and save valuable time." },
-              { icon: ShieldCheck, title: "Enterprise Security", description: "Bank-level encryption and compliance with legal data regulations." }
+              { 
+                icon: FileText, 
+                title: "Intelligent Document Analysis", 
+                description: "Extract key clauses, terms, and information with AI precision.",
+                path: "/analysis"
+              },
+              { 
+                icon: Briefcase, 
+                title: "Streamlined Workflows", 
+                description: "Automate tedious document review processes and save valuable time.",
+                path: "/workflow"
+              },
+              { 
+                icon: ShieldCheck, 
+                title: "Enterprise Security", 
+                description: "Bank-level encryption and compliance with legal data regulations.",
+                path: "/legal-advisor"
+              }
             ].map((feature, index) => (
-              <div key={index} className="p-6 rounded-xl glass-card hover-scale">
+              <div 
+                key={index} 
+                className="p-6 rounded-xl glass-card hover-scale cursor-pointer"
+                onClick={() => handleFeatureClick(feature.path)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleFeatureClick(feature.path);
+                  }
+                }}
+                aria-label={`Learn more about ${feature.title}`}
+              >
                 <feature.icon className="h-10 w-10 text-primary mb-4" />
                 <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
                 <p className="text-muted-foreground">{feature.description}</p>
