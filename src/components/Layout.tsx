@@ -1,6 +1,7 @@
 
 import React from 'react';
-import Nav from './Nav';
+import AppSidebar from './AppSidebar';
+import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -8,10 +9,20 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Nav />
-      <main className="flex-grow pt-16">{children}</main>
-    </div>
+    <SidebarProvider defaultOpen={true}>
+      <div className="min-h-screen flex w-full">
+        <AppSidebar />
+        <SidebarInset className="pt-4 px-4 md:px-6">
+          <div className="flex items-center h-12 mb-4">
+            <SidebarTrigger className="mr-4" />
+            <h1 className="text-2xl font-bold">DocuScan</h1>
+          </div>
+          <div className="flex-grow">
+            {children}
+          </div>
+        </SidebarInset>
+      </div>
+    </SidebarProvider>
   );
 };
 

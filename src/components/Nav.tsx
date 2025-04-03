@@ -20,6 +20,7 @@ const Nav: React.FC = () => {
     };
   }, []);
 
+  // Only used on the landing page now
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Dashboard', path: '/dashboard' },
@@ -42,7 +43,7 @@ const Nav: React.FC = () => {
           <span className="font-semibold text-xl tracking-tight">DocuScan</span>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation - Only for landing page */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8">
           <div className="flex gap-4 lg:gap-6 overflow-x-auto hide-scrollbar">
             {navItems.map((item) => (
@@ -66,12 +67,12 @@ const Nav: React.FC = () => {
           <div className="flex items-center gap-3 ml-2 shrink-0">
             <Button 
               variant="outline" 
-              className="hover-scale px-3 lg:px-4"
+              className="px-3 lg:px-4"
               onClick={() => location.pathname !== '/subscription' && (window.location.href = '/subscription')}
             >
               Subscribe
             </Button>
-            <Button className="hover-scale px-3 lg:px-4">Get Started</Button>
+            <Button className="px-3 lg:px-4">Get Started</Button>
           </div>
         </div>
 
