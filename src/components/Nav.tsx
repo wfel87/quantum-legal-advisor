@@ -26,6 +26,7 @@ const Nav: React.FC = () => {
     { name: 'Quantum Dashboard', path: '/quantum-dashboard' },
     { name: 'Workflow', path: '/workflow' },
     { name: 'Analysis', path: '/analysis' },
+    { name: 'Legal Advisor', path: '/legal-advisor' },
   ];
 
   return (
