@@ -61,7 +61,7 @@ const Nav: React.FC = () => {
             <Button 
               variant="outline" 
               className="hover-scale"
-              onClick={() => location.pathname !== '/subscription' && window.location.href = '/subscription'}
+              onClick={() => location.pathname !== '/subscription' && (window.location.href = '/subscription')}
             >
               Subscribe
             </Button>
@@ -101,7 +101,7 @@ const Nav: React.FC = () => {
               className="w-full justify-center"
               onClick={() => {
                 setIsMobileMenuOpen(false);
-                location.pathname !== '/subscription' && window.location.href = '/subscription';
+                location.pathname !== '/subscription' && (window.location.href = '/subscription');
               }}
             >
               Subscribe
