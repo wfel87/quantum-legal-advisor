@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import AppSidebar from './AppSidebar';
 import { SidebarProvider, SidebarInset, SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 
@@ -9,6 +9,7 @@ interface LayoutProps {
 
 const LayoutContent: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const { setOpen } = useSidebar();
+  const triggerRef = useRef<HTMLDivElement>(null);
   
   // Listen for mouse movement near the edge to detect hover intention
   useEffect(() => {
@@ -30,7 +31,15 @@ const LayoutContent: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
       <AppSidebar />
       <SidebarInset className="pt-4 px-4 md:px-6">
         <div className="flex items-center h-12 mb-4">
-          <SidebarTrigger className="mr-4 text-primary" />
+          <div 
+            ref={triggerRef}
+            className="relative" 
+            onMouseEnter={() => setOpen(true)}
+          >
+            <SidebarTrigger className="mr-4 text-primary z-10 relative" />
+            {/* Invisible hover area to make it easier to hit */}
+            <div className="absolute inset-0 w-10 h-10 -left-2 -top-2 cursor-pointer" />
+          </div>
           <h1 className="text-2xl font-bold">DocuScan</h1>
         </div>
         <div className="flex-grow">
