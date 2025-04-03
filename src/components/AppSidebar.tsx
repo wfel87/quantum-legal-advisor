@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -58,11 +57,16 @@ const AppSidebar = () => {
   useEffect(() => {
     if (!isPinned) {
       if (isHovered) {
+        // Show sidebar when hovered
         setOpen(true);
       } else {
+        // Delay hiding the sidebar to prevent flicker
         const timer = setTimeout(() => setOpen(false), 300);
         return () => clearTimeout(timer);
       }
+    } else {
+      // Keep sidebar open when pinned
+      setOpen(true);
     }
   }, [isPinned, isHovered, setOpen]);
 
