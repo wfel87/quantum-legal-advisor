@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Shield, Database, LockKeyhole } from 'lucide-react';
+import { ArrowRight, FileText, Briefcase, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
@@ -42,45 +42,45 @@ const Hero: React.FC = () => {
         <div className="max-w-3xl">
           <div data-animate className="mb-4 inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium">
             <span className="mr-2 h-2 w-2 animate-pulse rounded-full bg-primary"></span>
-            <span>Introducing QuantumGov for government agencies</span>
+            <span>Introducing DocuScan AI for legal professionals</span>
           </div>
           
           <h1 data-animate className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight md:leading-tight lg:leading-tight text-balance mb-6">
-            Quantum-powered intelligence and security platform
+            Transform your legal document workflow with AI
           </h1>
           
           <p data-animate className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl text-balance">
-            Harness the power of quantum computing for advanced intelligence analysis, secure communications, and inter-agency collaboration with military-grade encryption.
+            Automatically extract key information from legal documents with precision and speed. Our AI-powered platform streamlines contract review, due diligence, and compliance processes.
           </p>
           
           <div data-animate className="flex flex-col sm:flex-row gap-4 mb-16">
             <Button size="lg" className="hover-scale group" onClick={() => navigate('/dashboard')}>
-              Request Access <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+              Get Started <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
             </Button>
             <Button variant="outline" size="lg" className="hover-scale" onClick={() => navigate('/contact')}>
-              Schedule Demo
+              Book a Demo
             </Button>
           </div>
           
           <div data-animate className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { 
-                icon: Shield, 
-                title: "Top-Secret Clearance", 
-                description: "SCIF-compliant platform with multi-level security classification for sensitive data.",
-                path: "/security"
+                icon: FileText, 
+                title: "Intelligent Document Analysis", 
+                description: "Extract key clauses, terms, and information with AI precision.",
+                path: "/analysis"
               },
               { 
-                icon: Database, 
-                title: "Quantum Intelligence", 
-                description: "Process vast datasets and identify patterns with quantum-powered analytics.",
-                path: "/workflow-preview"
+                icon: Briefcase, 
+                title: "Streamlined Workflows", 
+                description: "Automate tedious document review processes and save valuable time.",
+                path: "/workflow"  // Changed to the dedicated Workflow page
               },
               { 
-                icon: LockKeyhole, 
-                title: "Zero-Trust Security", 
-                description: "Post-quantum cryptography with advanced authentication protocols.",
-                path: "/security"
+                icon: ShieldCheck, 
+                title: "Enterprise Security", 
+                description: "Bank-level encryption and compliance with legal data regulations.",
+                path: "/security"  // Changed to the new dedicated Security page
               }
             ].map((feature, index) => (
               <div 

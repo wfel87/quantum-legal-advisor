@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
 import { 
-  AtomIcon, BarChart3, Shield, FileCheck, Database, Globe,
-  FileText, AlertTriangle, Clock, Settings, Layers,
-  PlusCircle, CalendarClock, Gauge, Percent, Users, Radio
+  AtomIcon, BarChart3, Zap, BrainCircuit, 
+  FileText, AlertTriangle, Clock, Settings, 
+  PlusCircle, CalendarClock, Gauge, Percent, Vibrate, Database
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -20,51 +20,51 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, Cart
 
 const QuantumDashboard: React.FC = () => {
   const navigate = useNavigate();
-  const [currentSubscription, setCurrentSubscription] = useState('Enhanced');
+  const [currentSubscription, setCurrentSubscription] = useState('Pro');
   
   // Mock data for charts
-  const intelligenceAnalysisData = [
-    { name: 'Jan', count: 42 },
-    { name: 'Feb', count: 57 },
-    { name: 'Mar', count: 63 },
-    { name: 'Apr', count: 78 },
-    { name: 'May', count: 91 },
-    { name: 'Jun', count: 105 },
+  const documentAnalysisData = [
+    { name: 'Jan', count: 12 },
+    { name: 'Feb', count: 19 },
+    { name: 'Mar', count: 15 },
+    { name: 'Apr', count: 22 },
+    { name: 'May', count: 26 },
+    { name: 'Jun', count: 18 },
   ];
   
-  const threatAssessmentData = [
-    { name: 'Cyber', high: 14, medium: 22, low: 8 },
-    { name: 'Physical', high: 6, medium: 12, low: 18 },
-    { name: 'Insider', high: 9, medium: 15, low: 11 },
-    { name: 'Foreign', high: 17, medium: 21, low: 5 },
+  const riskScoreData = [
+    { name: 'Employment', high: 4, medium: 8, low: 12 },
+    { name: 'NDAs', high: 2, medium: 5, low: 8 },
+    { name: 'Leases', high: 3, medium: 6, low: 4 },
+    { name: 'Service', high: 1, medium: 7, low: 10 },
   ];
   
-  const securityClearanceData = [
-    { name: 'Week 1', rating: 82 },
-    { name: 'Week 2', rating: 85 },
-    { name: 'Week 3', rating: 91 },
-    { name: 'Week 4', rating: 94 },
+  const complianceRatingData = [
+    { name: 'Week 1', rating: 78 },
+    { name: 'Week 2', rating: 82 },
+    { name: 'Week 3', rating: 86 },
+    { name: 'Week 4', rating: 92 },
   ];
 
   // New comparison data for quantum vs. traditional
   const comparisonData = [
     { 
-      name: 'Processing Power', 
-      quantum: 98, 
-      traditional: 45,
-      description: 'Data processing capabilities'
+      name: 'Speed', 
+      quantum: 95, 
+      traditional: 42,
+      description: 'Processing time for document analysis'
     },
     { 
-      name: 'Encryption', 
-      quantum: 99, 
-      traditional: 78,
-      description: 'Resistance to quantum attacks'
-    },
-    { 
-      name: 'Pattern Detection', 
+      name: 'Accuracy', 
       quantum: 97, 
-      traditional: 51,
-      description: 'Ability to identify correlations'
+      traditional: 83,
+      description: 'Correctness of extracted information'
+    },
+    { 
+      name: 'Data Coverage', 
+      quantum: 99, 
+      traditional: 76,
+      description: 'Percentage of document data analyzed'
     },
   ];
 
@@ -82,31 +82,31 @@ const QuantumDashboard: React.FC = () => {
   // Card data
   const statCards = [
     { 
-      title: 'Intelligence Reports', 
-      value: '312', 
-      change: '+18% from last quarter', 
+      title: 'Total Documents', 
+      value: '143', 
+      change: '+12% from last month', 
       icon: FileText, 
       color: 'bg-blue-50 text-blue-500' 
     },
     { 
-      title: 'Threat Alerts', 
-      value: '47', 
-      change: '-12% from last quarter', 
+      title: 'Risk Alerts', 
+      value: '18', 
+      change: '-3% from last month', 
       icon: AlertTriangle, 
       color: 'bg-amber-50 text-amber-500' 
     },
     { 
       title: 'Quantum Analysis', 
-      value: '86', 
-      change: '+35% from last quarter', 
+      value: '24', 
+      change: '+8% from last month', 
       icon: AtomIcon, 
       color: 'bg-purple-50 text-purple-500' 
     },
     { 
-      title: 'Security Rating', 
-      value: '95%', 
-      change: '+3% from last quarter', 
-      icon: Shield, 
+      title: 'Compliance Score', 
+      value: '92%', 
+      change: '+4% from last month', 
+      icon: Gauge, 
       color: 'bg-green-50 text-green-500' 
     },
   ];
@@ -114,56 +114,56 @@ const QuantumDashboard: React.FC = () => {
   // Upcoming tasks
   const upcomingTasks = [
     { 
-      title: 'Cyber Intelligence Briefing', 
+      title: 'Contract Review: ABC Corp', 
       dueDate: '2023-12-15', 
       priority: 'High',
-      type: 'Intelligence'
+      type: 'Contract Review'
     },
     { 
-      title: 'Security Council Meeting', 
+      title: 'Compliance Check: XYZ Agreement', 
       dueDate: '2023-12-18', 
       priority: 'Medium',
-      type: 'Meeting'
+      type: 'Compliance'
     },
     { 
-      title: 'Risk Assessment: Satellite Systems', 
+      title: 'Risk Assessment: Smith Lease', 
       dueDate: '2023-12-20', 
       priority: 'Medium',
-      type: 'Assessment'
+      type: 'Risk Assessment'
     },
     { 
-      title: 'Quantum Analysis: Foreign Communications', 
+      title: 'Quantum Analysis: Parker NDA', 
       dueDate: '2023-12-22', 
-      priority: 'High',
-      type: 'Analysis'
+      priority: 'Low',
+      type: 'Quantum Analysis'
     },
   ];
 
   // Premium features
   const quantumFeatures = [
     {
-      title: 'Quantum Intelligence Analysis',
-      description: 'Advanced pattern recognition for intelligence data',
-      available: currentSubscription === 'Elite',
-      icon: Database,
+      title: 'Quantum Legal Analysis',
+      description: 'Harness quantum computing for deeper legal insights',
+      available: currentSubscription === 'Premium',
+      icon: BrainCircuit,
     },
     {
-      title: 'Threat Prediction',
-      description: 'Forecast potential security threats with quantum ML',
-      available: currentSubscription === 'Elite',
+      title: 'Predictive Litigation',
+      description: 'Forecast potential legal outcomes with quantum ML',
+      available: currentSubscription === 'Premium',
       icon: BarChart3,
     },
     {
-      title: 'Secure Inter-Agency Communication',
-      description: 'Quantum-secured communication channels',
-      available: currentSubscription === 'Elite',
-      icon: Radio,
+      title: 'Real-time Regulatory Updates',
+      description: 'Stay compliant with automated regulatory monitoring',
+      available: currentSubscription === 'Premium',
+      icon: Zap,
     },
     {
-      title: 'Global Threat Monitoring',
-      description: 'Real-time monitoring of global security threats',
-      available: currentSubscription === 'Elite',
-      icon: Globe,
+      title: 'GraphQL API Access',
+      description: 'Integrate our quantum-powered analysis with your systems',
+      available: currentSubscription === 'Premium',
+      icon: Settings,
     },
   ];
 
@@ -182,12 +182,12 @@ const QuantumDashboard: React.FC = () => {
 
   const getComparisonIcon = (metric: string) => {
     switch (metric.toLowerCase()) {
-      case 'processing power':
+      case 'speed':
+        return Vibrate;
+      case 'accuracy':
+        return Gauge;
+      case 'data coverage':
         return Database;
-      case 'encryption':
-        return Shield;
-      case 'pattern detection':
-        return Layers;
       default:
         return AtomIcon;
     }
@@ -197,9 +197,9 @@ const QuantumDashboard: React.FC = () => {
     <div className="w-full max-w-7xl mx-auto p-6 md:p-10 animate-fade-in">
       <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold mb-2">QuantumGov Command Center</h1>
+          <h1 className="text-3xl font-bold mb-2">Quantum Legal Dashboard</h1>
           <p className="text-muted-foreground">
-            Secure intelligence and analytics platform for government agencies
+            Your AI-powered legal document analytics hub
           </p>
         </div>
         
@@ -210,7 +210,7 @@ const QuantumDashboard: React.FC = () => {
             className="flex items-center"
           >
             <Settings className="mr-2 h-4 w-4" />
-            Operations
+            Workflows
           </Button>
           
           <Button 
@@ -218,7 +218,7 @@ const QuantumDashboard: React.FC = () => {
             className="transition-transform duration-300 hover:scale-105"
           >
             <PlusCircle className="mr-2 h-4 w-4" />
-            New Intelligence
+            New Document
           </Button>
         </div>
       </div>
@@ -227,7 +227,7 @@ const QuantumDashboard: React.FC = () => {
       <div className="mb-8 rounded-xl bg-gradient-to-r from-purple-100 via-indigo-50 to-blue-100 p-6 border border-primary/20">
         <h2 className="text-xl font-bold mb-4 flex items-center">
           <AtomIcon className="mr-2 h-5 w-5 text-primary" />
-          Quantum vs. Traditional Systems
+          Quantum vs. Traditional Analysis
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -275,17 +275,17 @@ const QuantumDashboard: React.FC = () => {
         </div>
       </div>
 
-      {currentSubscription !== 'Elite' && (
+      {currentSubscription !== 'Premium' && (
         <div className="mb-8 rounded-xl bg-gradient-to-r from-purple-100 to-blue-100 p-6 border border-primary/20">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div className="flex items-center">
               <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center mr-4">
-                <Shield className="h-6 w-6 text-primary" />
+                <AtomIcon className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-bold text-lg">Upgrade to Elite Access</h3>
+                <h3 className="font-bold text-lg">Upgrade to Premium</h3>
                 <p className="text-muted-foreground">
-                  Unlock top-secret capabilities and advanced quantum intelligence features
+                  Unlock quantum-powered legal analysis and advanced features
                 </p>
               </div>
             </div>
@@ -293,7 +293,7 @@ const QuantumDashboard: React.FC = () => {
               onClick={() => navigate('/subscription')}
               className="transition-transform duration-300 hover:scale-105"
             >
-              Request Upgrade
+              Upgrade Now
             </Button>
           </div>
         </div>
@@ -315,8 +315,8 @@ const QuantumDashboard: React.FC = () => {
       <Tabs defaultValue="overview" className="mb-8">
         <TabsList className="mb-6">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="analytics">Intelligence</TabsTrigger>
-          <TabsTrigger value="comparison">Performance</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="comparison">Performance Comparison</TabsTrigger>
           <TabsTrigger value="quantum">Quantum Features</TabsTrigger>
         </TabsList>
         
@@ -325,11 +325,11 @@ const QuantumDashboard: React.FC = () => {
             <div className="lg:col-span-2 rounded-xl glass-card p-6">
               <h3 className="text-lg font-medium mb-4 flex items-center">
                 <BarChart3 className="mr-2 h-5 w-5 text-primary" />
-                Intelligence Analysis Trend
+                Document Analysis Trend
               </h3>
               <div className="h-72">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={intelligenceAnalysisData}>
+                  <BarChart data={documentAnalysisData}>
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
@@ -342,7 +342,7 @@ const QuantumDashboard: React.FC = () => {
             <div className="rounded-xl glass-card p-6">
               <h3 className="text-lg font-medium mb-4 flex items-center">
                 <CalendarClock className="mr-2 h-5 w-5 text-primary" />
-                Upcoming Operations
+                Upcoming Tasks
               </h3>
               <div className="space-y-4">
                 {upcomingTasks.map((task, index) => (
@@ -360,7 +360,7 @@ const QuantumDashboard: React.FC = () => {
                   </div>
                 ))}
                 <Button variant="ghost" className="w-full text-xs" size="sm">
-                  View All Operations
+                  View All Tasks
                 </Button>
               </div>
             </div>
@@ -369,11 +369,11 @@ const QuantumDashboard: React.FC = () => {
           <div className="rounded-xl glass-card p-6">
             <h3 className="text-lg font-medium mb-4 flex items-center">
               <AlertTriangle className="mr-2 h-5 w-5 text-primary" />
-              Threat Assessment by Category
+              Risk Assessment by Document Type
             </h3>
             <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={threatAssessmentData}>
+                <BarChart data={riskScoreData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
@@ -391,10 +391,10 @@ const QuantumDashboard: React.FC = () => {
         <TabsContent value="analytics" className="animate-slide-in space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="rounded-xl glass-card p-6">
-              <h3 className="text-lg font-medium mb-4">Security Clearance Metrics</h3>
+              <h3 className="text-lg font-medium mb-4">Compliance Rating Trend</h3>
               <div className="h-72">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={securityClearanceData}>
+                  <LineChart data={complianceRatingData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis domain={[70, 100]} />
@@ -412,17 +412,17 @@ const QuantumDashboard: React.FC = () => {
             </div>
             
             <div className="rounded-xl glass-card p-6">
-              <h3 className="text-lg font-medium mb-4">Inter-agency Collaboration</h3>
+              <h3 className="text-lg font-medium mb-4">Risk By Category</h3>
               <div className="h-72 flex items-center justify-center">
                 <div className="text-center text-muted-foreground">
-                  <Users className="h-12 w-12 mx-auto mb-4 opacity-30" />
-                  <p className="mb-2">Elite Access Required</p>
+                  <AtomIcon className="h-12 w-12 mx-auto mb-4 opacity-30" />
+                  <p className="mb-2">Quantum Analysis Required</p>
                   <Button 
                     variant="outline" 
                     size="sm"
                     onClick={() => navigate('/subscription')}
                   >
-                    Request Elite Access
+                    Upgrade to Premium
                   </Button>
                 </div>
               </div>
@@ -430,22 +430,22 @@ const QuantumDashboard: React.FC = () => {
           </div>
           
           <div className="rounded-xl glass-card p-6">
-            <h3 className="text-lg font-medium mb-4">Global Threat Monitoring</h3>
+            <h3 className="text-lg font-medium mb-4">Processing Time Analytics</h3>
             <div className="text-center p-8 text-muted-foreground">
-              <Globe className="h-12 w-12 mx-auto mb-4 opacity-30" />
-              <p className="mb-2">Advanced global monitoring available with Elite access</p>
+              <Clock className="h-12 w-12 mx-auto mb-4 opacity-30" />
+              <p className="mb-2">Advanced analytics available with Premium plan</p>
               <Button 
                 variant="outline" 
                 size="sm"
                 onClick={() => navigate('/subscription')}
               >
-                Request Elite Access
+                Upgrade to Premium
               </Button>
             </div>
           </div>
         </TabsContent>
 
-        {/* Performance Comparison Tab */}
+        {/* New Comparison Tab */}
         <TabsContent value="comparison" className="animate-slide-in space-y-6">
           <div className="rounded-xl glass-card p-6">
             <h3 className="text-lg font-medium mb-4 flex items-center">
@@ -471,9 +471,9 @@ const QuantumDashboard: React.FC = () => {
                 Performance Insights
               </h4>
               <p className="text-sm text-blue-700">
-                Quantum processing shows an average of <span className="font-bold">29%</span> higher performance
-                compared to traditional methods across all intelligence operations. The greatest improvement was seen in complex pattern recognition,
-                where quantum methods achieved <span className="font-bold">97%</span> accuracy versus <span className="font-bold">51%</span> with traditional methods.
+                Quantum processing shows an average of <span className="font-bold">27%</span> higher performance
+                compared to traditional methods across all documents. The greatest improvement was seen in complex legal contracts,
+                where quantum methods achieved <span className="font-bold">99%</span> accuracy versus <span className="font-bold">77%</span> with traditional methods.
               </p>
             </div>
           </div>
@@ -481,7 +481,7 @@ const QuantumDashboard: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {comparisonData.map((item, index) => (
               <div key={index} className="rounded-xl glass-card p-6">
-                <h3 className="font-medium mb-3">{item.name}</h3>
+                <h3 className="font-medium mb-3">{item.name} Analysis</h3>
                 <div className="flex items-center justify-between mb-6">
                   <span className="text-3xl font-bold text-primary">{item.quantum}%</span>
                   <span className="text-sm font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
@@ -513,7 +513,7 @@ const QuantumDashboard: React.FC = () => {
           <div className="rounded-xl glass-card p-6">
             <h3 className="text-lg font-medium mb-4 flex items-center">
               <AtomIcon className="mr-2 h-5 w-5 text-primary" />
-              Quantum-Powered Government Solutions
+              Quantum-Powered Legal Analysis
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -544,7 +544,7 @@ const QuantumDashboard: React.FC = () => {
                           className="h-8"
                           onClick={() => navigate('/subscription')}
                         >
-                          Request Access
+                          Upgrade to Access
                         </Button>
                       )}
                     </div>
@@ -559,7 +559,7 @@ const QuantumDashboard: React.FC = () => {
                   onClick={() => navigate('/subscription')}
                   className="transition-transform duration-300 hover:scale-105"
                 >
-                  Request Elite Access
+                  Upgrade to Premium
                 </Button>
               </div>
             )}

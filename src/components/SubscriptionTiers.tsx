@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Check, Shield, AtomIcon, Database } from 'lucide-react';
+import { Check, Zap, BrainCircuit, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,57 +9,56 @@ const SubscriptionTiers: React.FC = () => {
 
   const tiers = [
     {
-      name: 'Standard',
-      description: 'Essential security capabilities for governmental agencies',
-      price: 'Contact Sales',
-      icon: Shield,
+      name: 'Basic',
+      description: 'Essential legal document analysis for everyday users',
+      price: '$9.99',
+      icon: Zap,
       iconColor: 'bg-blue-50 text-blue-500',
       features: [
-        'Secure document storage',
-        'Automated threat detection',
-        'Basic intelligence analysis',
-        'Limited user accounts (10)',
-        'Standard support SLA',
-        'Single-agency access'
+        'Secure document upload',
+        'Automated clause highlighting',
+        'Plain-language summaries',
+        'Limited document storage (10)',
+        'Basic support'
       ],
-      cta: 'Request Access',
+      cta: 'Start Basic',
       highlight: false
     },
     {
-      name: 'Enhanced',
-      description: 'Advanced security for intelligence operations',
-      price: 'Contact Sales',
-      icon: Database,
+      name: 'Pro',
+      description: 'Enhanced analysis for professional users',
+      price: '$29.99',
+      icon: Sparkles,
       iconColor: 'bg-purple-50 text-purple-500',
       features: [
-        'Everything in Standard',
-        'Advanced risk assessment',
-        'Threat prediction',
-        'Inter-agency collaboration',
-        'Secure communication channels',
-        'Priority support SLA',
-        'Multi-agency access (5)'
+        'Everything in Basic',
+        'Risk scoring',
+        'Contextual recommendations',
+        'Automated compliance alerts',
+        'Advanced NLP analysis',
+        'Priority support',
+        'Extended document storage (100)'
       ],
-      cta: 'Request Access',
+      cta: 'Start Pro',
       highlight: true
     },
     {
-      name: 'Elite',
-      description: 'Quantum-powered intelligence for highest security needs',
-      price: 'Contact Sales',
-      icon: AtomIcon,
+      name: 'Premium',
+      description: 'Quantum-powered legal analysis for enterprises',
+      price: '$79.99',
+      icon: BrainCircuit,
       iconColor: 'bg-amber-50 text-amber-500',
       features: [
-        'Everything in Enhanced',
-        'Quantum-powered analytics',
-        'Pattern recognition algorithms',
-        'Real-time global threat monitoring',
-        'Top-Secret clearance capabilities',
-        'Custom quantum solutions',
-        'Unlimited agency access',
-        'Dedicated security team'
+        'Everything in Pro',
+        'Quantum-powered legal analysis',
+        'Predictive litigation analytics',
+        'Real-time regulatory updates',
+        'Dynamic legal workflows',
+        'GraphQL API access',
+        'Unlimited document storage',
+        'Dedicated support team'
       ],
-      cta: 'Request Access',
+      cta: 'Start Premium',
       highlight: false
     }
   ];
@@ -73,9 +72,9 @@ const SubscriptionTiers: React.FC = () => {
   return (
     <div className="w-full max-w-7xl mx-auto py-16 px-6 animate-fade-in">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-4">QuantumGov Access Levels</h2>
+        <h2 className="text-3xl font-bold mb-4">Quantum Legal Advisor</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Select the security level that meets your agency's operational requirements
+          Choose the plan that works best for your legal document analysis needs
         </p>
       </div>
 
@@ -103,7 +102,8 @@ const SubscriptionTiers: React.FC = () => {
             <p className="text-muted-foreground mb-4">{tier.description}</p>
             
             <div className="mb-6">
-              <span className="text-xl font-bold">{tier.price}</span>
+              <span className="text-3xl font-bold">{tier.price}</span>
+              <span className="text-muted-foreground"> / month</span>
             </div>
             
             <ul className="space-y-3 mb-8 flex-grow">
