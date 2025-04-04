@@ -1,39 +1,49 @@
 
 import React from 'react';
 import Layout from '@/components/Layout';
-import { ShieldCheck, Lock, Server, Database, FileCheck, UserCheck } from 'lucide-react';
+import { ShieldCheck, Lock, Server, Database, FileCheck, Users, Globe, LockKeyhole } from 'lucide-react';
 
 const Security: React.FC = () => {
   const securityFeatures = [
     {
+      icon: ShieldCheck,
+      title: 'Top-Secret Clearance',
+      description: 'Platform meets SCIF (Sensitive Compartmented Information Facility) requirements with multi-level security classification.'
+    },
+    {
       icon: Lock,
-      title: 'End-to-End Encryption',
-      description: 'All documents are encrypted in transit and at rest using AES-256 encryption standards, ensuring your legal documents remain secure.'
+      title: 'Quantum Encryption',
+      description: 'Post-quantum cryptographic algorithms resistant to both classical and quantum computing attacks.'
     },
     {
       icon: Server,
-      title: 'Secure Infrastructure',
-      description: 'Our platform is hosted on SOC 2 compliant servers with redundant backups and disaster recovery protocols.'
+      title: 'Air-Gapped Systems',
+      description: 'Physically isolated networks for the most sensitive operations with strict access controls.'
     },
     {
       icon: Database,
-      title: 'Data Isolation',
-      description: 'Your organization\'s data is completely isolated from other customers, preventing any cross-contamination of sensitive information.'
+      title: 'Data Sovereignty',
+      description: 'Geographic data storage controls ensure compliance with national security requirements and regulations.'
     },
     {
       icon: FileCheck,
-      title: 'Compliance Controls',
-      description: 'Built-in compliance with GDPR, CCPA, HIPAA, and other major regulatory frameworks relevant to legal document management.'
+      title: 'Intelligence Controls',
+      description: 'Built-in compliance with IC directives, NIST standards, and FedRAMP High certification requirements.'
     },
     {
-      icon: UserCheck,
-      title: 'Role-Based Access',
-      description: 'Granular permission controls allow you to determine exactly who can access, modify, or share specific documents within your organization.'
+      icon: Globe,
+      title: 'Cross-Domain Solutions',
+      description: 'Secure information exchange between networks of different security classifications while preventing data leakage.'
     },
     {
-      icon: ShieldCheck,
-      title: 'Regular Security Audits',
-      description: 'Our systems undergo rigorous quarterly security assessments by independent third-party experts to identify and address potential vulnerabilities.'
+      icon: Users,
+      title: 'Identity Verification',
+      description: 'Multi-factor authentication with biometric verification and hardware security keys for authorized personnel.'
+    },
+    {
+      icon: LockKeyhole,
+      title: 'Continuous Monitoring',
+      description: 'Real-time threat detection with automated incident response capabilities and comprehensive audit logging.'
     }
   ];
 
@@ -41,14 +51,14 @@ const Security: React.FC = () => {
     <Layout>
       <div className="container mx-auto py-12 px-4 md:px-6">
         <div className="max-w-3xl mx-auto mb-12 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">Enterprise-Grade Security</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">Government-Grade Security</h1>
           <p className="text-lg text-muted-foreground">
-            DocuScan is built with security as a foundation, not an afterthought. Our robust security measures ensure your legal documents remain private, protected, and compliant.
+            QuantumGov is engineered with unprecedented security measures to protect the most sensitive national security information and intelligence operations.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {securityFeatures.map((feature, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {securityFeatures.slice(0, 4).map((feature, index) => (
             <div 
               key={index} 
               className="rounded-xl glass-card p-6 hover:shadow-lg transition-all duration-300"
@@ -62,26 +72,41 @@ const Security: React.FC = () => {
           ))}
         </div>
 
-        <div className="rounded-xl glass-card p-8 mb-12">
-          <h2 className="text-2xl font-bold mb-4">Our Security Commitment</h2>
+        <div className="rounded-xl glass-card p-8 mb-12 bg-gradient-to-r from-slate-50 to-blue-50">
+          <h2 className="text-2xl font-bold mb-4">Intelligence Community Approved</h2>
           <p className="mb-4">
-            At DocuScan, we understand that legal documents often contain highly sensitive and confidential information. 
-            That's why we've implemented security measures that exceed industry standards to ensure your data remains protected.
+            QuantumGov has been designed from the ground up to meet the stringent security requirements of intelligence agencies and defense departments.
+            Our platform is certified for use with classified information and sensitive operations.
           </p>
           <p className="mb-4">
-            Our security infrastructure is designed with a defense-in-depth approach, incorporating multiple layers of protection 
-            to guard against unauthorized access, data breaches, and service disruptions.
+            The system employs a defense-in-depth approach with multiple security layers to protect against sophisticated adversaries, 
+            including nation-state actors and advanced persistent threats (APTs).
           </p>
           <p>
-            We maintain strict compliance with relevant legal and regulatory requirements for data handling and storage. 
-            Our platform is regularly audited by independent security experts to validate our security controls and identify any areas for improvement.
+            All operations are conducted with zero-trust security principles, ensuring continuous verification regardless of 
+            user clearance level or network location. Every access request is fully authenticated, authorized, and encrypted.
           </p>
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {securityFeatures.slice(4, 8).map((feature, index) => (
+            <div 
+              key={index} 
+              className="rounded-xl glass-card p-6 hover:shadow-lg transition-all duration-300"
+            >
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <feature.icon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <p className="text-muted-foreground">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-6">Security Certifications</h2>
+          <h2 className="text-2xl font-bold mb-6">Compliance & Certifications</h2>
           <div className="flex flex-wrap justify-center gap-6">
-            {['ISO 27001', 'SOC 2', 'GDPR Compliant', 'HIPAA Compliant'].map((cert, index) => (
+            {['NIST 800-53', 'FIPS 140-3', 'FedRAMP High', 'CMMC Level 5', 'ICD 503', 'FISA 702 Compliance', 'EO 14028', 'CNSS 1253'].map((cert, index) => (
               <div key={index} className="py-3 px-6 rounded-full bg-primary/10 font-medium">
                 {cert}
               </div>

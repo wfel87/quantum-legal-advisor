@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Check, Zap, BrainCircuit, Sparkles } from 'lucide-react';
+import { Check, Shield, AtomIcon, Database } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { useNavigate } from 'react-router-dom';
@@ -11,62 +11,64 @@ const PricingTiers: React.FC = () => {
 
   const tiers = [
     {
-      name: 'Basic',
-      description: 'Essential legal document analysis for everyday users',
-      monthlyPrice: '$9.99',
-      annualPrice: '$99.90',
-      saveAmount: '$19.98',
-      icon: Zap,
+      name: 'Standard',
+      description: 'Essential security capabilities for governmental agencies',
+      monthlyPrice: 'Contact Sales',
+      annualPrice: 'Contact Sales',
+      saveAmount: 'Custom pricing',
+      icon: Shield,
       iconColor: 'bg-blue-50 text-blue-500',
       features: [
-        'Secure document upload',
-        'Automated clause highlighting',
-        'Plain-language summaries',
-        'Limited document storage (10)',
-        'Basic support'
+        'Secure document storage',
+        'Automated threat detection',
+        'Basic intelligence analysis',
+        'Limited user accounts (10)',
+        'Standard support SLA',
+        'Single-agency access'
       ],
-      cta: 'Start Basic',
+      cta: 'Request Access',
       highlight: false
     },
     {
-      name: 'Pro',
-      description: 'Enhanced analysis for professional users',
-      monthlyPrice: '$29.99',
-      annualPrice: '$299.90',
-      saveAmount: '$59.98',
-      icon: Sparkles,
+      name: 'Enhanced',
+      description: 'Advanced security for intelligence operations',
+      monthlyPrice: 'Contact Sales',
+      annualPrice: 'Contact Sales',
+      saveAmount: 'Custom pricing',
+      icon: Database,
       iconColor: 'bg-purple-50 text-purple-500',
       features: [
-        'Everything in Basic',
-        'Risk scoring',
-        'Contextual recommendations',
-        'Automated compliance alerts',
-        'Advanced NLP analysis',
-        'Priority support',
-        'Extended document storage (100)'
+        'Everything in Standard',
+        'Advanced risk assessment',
+        'Threat prediction',
+        'Inter-agency collaboration',
+        'Secure communication channels',
+        'Priority support SLA',
+        'Multi-agency access (5)',
+        'Customizable security protocols'
       ],
-      cta: 'Start Pro',
+      cta: 'Request Access',
       highlight: true
     },
     {
-      name: 'Premium',
-      description: 'Quantum-powered legal analysis for enterprises',
-      monthlyPrice: '$79.99',
-      annualPrice: '$799.90',
-      saveAmount: '$159.98',
-      icon: BrainCircuit,
+      name: 'Elite',
+      description: 'Quantum-powered intelligence for highest security needs',
+      monthlyPrice: 'Contact Sales',
+      annualPrice: 'Contact Sales',
+      saveAmount: 'Custom pricing',
+      icon: AtomIcon,
       iconColor: 'bg-amber-50 text-amber-500',
       features: [
-        'Everything in Pro',
-        'Quantum-powered legal analysis',
-        'Predictive litigation analytics',
-        'Real-time regulatory updates',
-        'Dynamic legal workflows',
-        'GraphQL API access',
-        'Unlimited document storage',
-        'Dedicated support team'
+        'Everything in Enhanced',
+        'Quantum-powered analytics',
+        'Pattern recognition algorithms',
+        'Real-time global threat monitoring',
+        'Top-Secret clearance capabilities',
+        'Custom quantum solutions',
+        'Unlimited agency access',
+        'Dedicated security team'
       ],
-      cta: 'Start Premium',
+      cta: 'Request Access',
       highlight: false
     }
   ];
@@ -80,21 +82,21 @@ const PricingTiers: React.FC = () => {
   return (
     <div className="w-full max-w-7xl mx-auto py-16 px-6 animate-fade-in">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-4">Quantum Legal Advisor</h2>
+        <h2 className="text-3xl font-bold mb-4">QuantumGov Access Levels</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Choose the plan that works best for your legal document analysis needs
+          Tailored security solutions for government agencies with quantum-powered intelligence analysis
         </p>
       </div>
 
       <div className="flex items-center justify-center mb-10">
-        <span className={`mr-2 text-sm font-medium ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>Monthly</span>
+        <span className={`mr-2 text-sm font-medium ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>Pay-Per-Use</span>
         <Switch
           checked={isAnnual}
           onCheckedChange={setIsAnnual}
           className="mx-2"
         />
         <span className={`ml-2 text-sm font-medium ${isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
-          Annual <span className="text-primary text-xs font-semibold ml-1">Save up to 20%</span>
+          Annual Agreement <span className="text-primary text-xs font-semibold ml-1">Preferred pricing</span>
         </span>
       </div>
 
@@ -122,11 +124,10 @@ const PricingTiers: React.FC = () => {
             <p className="text-muted-foreground mb-4">{tier.description}</p>
             
             <div className="mb-6">
-              <span className="text-3xl font-bold">{isAnnual ? tier.annualPrice : tier.monthlyPrice}</span>
-              <span className="text-muted-foreground"> / {isAnnual ? 'year' : 'month'}</span>
+              <span className="text-xl font-bold">{isAnnual ? tier.annualPrice : tier.monthlyPrice}</span>
               {isAnnual && (
                 <div className="text-xs text-green-600 font-medium mt-1">
-                  Save {tier.saveAmount} per year
+                  {tier.saveAmount}
                 </div>
               )}
             </div>
