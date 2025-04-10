@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FileText, Scale, AlertTriangle, CheckCircle } from 'lucide-react';
+import LegalDocumentUpload from '@/components/LegalDocumentUpload';
 
 const LegalAdvisor: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ const LegalAdvisor: React.FC = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="advice" className="w-full">
+        <Tabs defaultValue="documents" className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-8">
             <TabsTrigger value="advice">Legal Advice</TabsTrigger>
             <TabsTrigger value="documents">Document Analysis</TabsTrigger>
@@ -86,15 +87,11 @@ const LegalAdvisor: React.FC = () => {
                   Document Analysis
                 </CardTitle>
                 <CardDescription>
-                  Upload your legal documents for AI-powered analysis
+                  Upload contracts, agreements, or any legal documents for AI-powered analysis. We support PDF and Word formats.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="p-6 border rounded-lg bg-muted/50">
-                  <p className="text-center text-muted-foreground">
-                    You need to be logged in to access this feature.
-                  </p>
-                </div>
+                <LegalDocumentUpload />
               </CardContent>
             </Card>
           </TabsContent>
