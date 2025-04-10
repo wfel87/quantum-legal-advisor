@@ -42,9 +42,7 @@ const LayoutContent: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
           </div>
           <h1 className="text-2xl font-bold">DocuScan</h1>
         </div>
-        <div className="flex-grow">
-          {children}
-        </div>
+        {children}
       </SidebarInset>
     </>
   );
@@ -52,7 +50,7 @@ const LayoutContent: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={false}>
       <div className="min-h-screen flex w-full bg-gradient-to-br from-background to-background/90">
         <LayoutContent>
           {children}

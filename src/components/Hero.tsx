@@ -31,15 +31,15 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <div ref={heroRef} className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden pt-20 px-6 md:px-10">
+    <div ref={heroRef} className="relative flex items-center justify-center min-h-screen overflow-hidden py-12 px-6 md:px-10">
       {/* Decorative background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-primary/5 rounded-full blur-3xl"></div>
       </div>
       
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="max-w-3xl">
+      <div className="max-w-7xl mx-auto w-full text-center">
+        <div className="max-w-3xl mx-auto">
           <div data-animate className="mb-4 inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium">
             <span className="mr-2 h-2 w-2 animate-pulse rounded-full bg-primary"></span>
             <span>Introducing DocuScan AI for legal professionals</span>
@@ -49,11 +49,11 @@ const Hero: React.FC = () => {
             Transform your legal document workflow with AI
           </h1>
           
-          <p data-animate className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl text-balance">
+          <p data-animate className="text-lg md:text-xl text-muted-foreground mb-8 mx-auto max-w-2xl text-balance">
             Automatically extract key information from legal documents with precision and speed. Our AI-powered platform streamlines contract review, due diligence, and compliance processes.
           </p>
           
-          <div data-animate className="flex flex-col sm:flex-row gap-4 mb-16">
+          <div data-animate className="flex flex-col sm:flex-row gap-4 mb-16 justify-center">
             <Button size="lg" className="hover-scale group" onClick={() => navigate('/dashboard')}>
               Get Started <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
             </Button>
@@ -62,7 +62,7 @@ const Hero: React.FC = () => {
             </Button>
           </div>
           
-          <div data-animate className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div data-animate className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {[
               { 
                 icon: FileText, 
@@ -74,13 +74,13 @@ const Hero: React.FC = () => {
                 icon: Briefcase, 
                 title: "Streamlined Workflows", 
                 description: "Automate tedious document review processes and save valuable time.",
-                path: "/workflow"  // Changed to the dedicated Workflow page
+                path: "/workflow"
               },
               { 
                 icon: ShieldCheck, 
                 title: "Enterprise Security", 
                 description: "Bank-level encryption and compliance with legal data regulations.",
-                path: "/security"  // Changed to the new dedicated Security page
+                path: "/security"
               }
             ].map((feature, index) => (
               <div 
@@ -96,9 +96,9 @@ const Hero: React.FC = () => {
                 }}
                 aria-label={`Learn more about ${feature.title}`}
               >
-                <feature.icon className="h-10 w-10 text-primary mb-4" />
-                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
+                <feature.icon className="h-10 w-10 text-primary mb-4 mx-auto" />
+                <h3 className="text-lg font-semibold mb-2 text-center">{feature.title}</h3>
+                <p className="text-muted-foreground text-center">{feature.description}</p>
               </div>
             ))}
           </div>

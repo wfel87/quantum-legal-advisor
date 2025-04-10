@@ -2,15 +2,17 @@
 import React from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
-import UploadSection from '@/components/UploadSection';
 import Testimonials from '@/components/Testimonials';
+import UploadSection from '@/components/UploadSection';
 
 const Index: React.FC = () => {
   return (
     <Layout>
       <Hero />
-      <Testimonials />
-      <UploadSection />
+      <div className="mt-24">
+        <Testimonials />
+        <UploadSection />
+      </div>
     </Layout>
   );
 };
